@@ -8,6 +8,10 @@ body,
   font-family: 'Roboto', sans-serif;
 }
 
+body, html{
+    overflow:hidden;
+}
+
 h6{
   font-family: 'Roboto', sans-serif;  
   font-size: 10px;
@@ -24,7 +28,9 @@ h6{
   width: 300px;
 }
 
-
+.esri-expand__container--expanded{
+    background-color:aqua;
+}
 
 .edit-button:hover,
 .edit-button:focus {
