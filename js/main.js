@@ -24,12 +24,6 @@ $(document).ready(function(){
         $(this).css('color','black');
     });
     
-    var body = document.getElementById("body");
-    body.addEventListener('touchmove', function(e){
-        e.preventDefault();
-    },false);
-
-   
     
     require([
         "esri/Map",
