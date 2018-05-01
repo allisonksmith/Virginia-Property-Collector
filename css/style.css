@@ -157,7 +157,8 @@ input:valid {
 .zoneCheck{
     background:none!important;
     border:none;
-    padding:2.5px;
+    padding-top:10px;
+    padding-bottom:5px;
     text-align: left;
     cursor: pointer;
 }
