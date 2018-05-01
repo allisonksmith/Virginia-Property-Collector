@@ -1,0 +1,227 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+h6{
+  font-family: 'Roboto', sans-serif;  
+  font-size: 10px;
+  text-decoration: underline;
+}
+
+.editArea-container {
+  background: #fff;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5em;
+  overflow: auto;
+  max-height: 90vh;
+  padding: 12px 15px;
+  width: 300px;
+}
+
+
+
+.edit-button:hover,
+.edit-button:focus {
+  background-color: #e4e4e4;
+}
+
+.inputInfo {
+  font-size: 12px;
+  height: 32px;
+  margin-bottom: 6px;
+  padding: 0 6px;
+  width: 100%;
+}
+
+.inputInfo::placeholder{
+    color: #9C9C9C;
+}
+
+#info-div{
+    width:300px;
+    color: #323232;
+    background-color: #f5f5f5;
+    padding: 6px 7px;
+    font-size: 14px;
+    background: #fff;
+}
+#filter{
+    font-size: 12px;
+    color: #9C9C9C;
+    height: 32px;
+    padding:0 6px;
+    margin-bottom: 10px;
+    width:100%;
+    display: inline-block;
+    cursor:pointer;
+}
+
+.dropDown {
+    font-size: 12px;
+    color: #9C9C9C;
+    height: 32px;
+    padding:0 6px;
+    margin-bottom: 10px;
+    width:100%;
+    display: inline-block;
+    cursor:pointer;
+}
+option:not(:nth-child(1)){
+    color:black;
+}
+
+.date {
+    font-size: 12px;
+    height: 32px;
+    padding:0 6px;
+    margin-bottom: 10px;
+    color: #323232;
+    width:100%;
+}
+
+.list-heading {
+  font-weight: normal;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #323232;
+}
+
+.edit-button {
+  font-size: 14px;
+  height: 32px;
+  margin-top: 10px;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #0079c1;
+  color: #0079c1;
+}
+
+.or-wrap {
+  background-color: #e0e0e0;
+  height: 1px;
+  margin: 2em 0;
+  overflow: visible;
+}
+
+.or-text {
+  background: #fff;
+  line-height: 0;
+  padding: 0 1em;
+  position: relative;
+  top: -.75em;
+}
+
+input:invalid {
+  border: 2px solid red;
+  color: red;
+}
+
+input:valid {
+  border: 1px solid green;
+}
+
+.clearButton {
+    background:none!important;
+    color:#0079c1;
+    border:none;
+    font-size: 8px;
+    padding:0;
+    padding-top: 10px;
+    float: right;
+    /*border is optional*/
+    border-bottom:.5px solid #0079c1; 
+    cursor: pointer;
+}
+
+.zoneCheck{
+    background:none!important;
+    border:none;
+    padding:0;
+    text-align: left;
+    cursor: pointer;
+}
+
+#ezClickText{
+    color: rgba(104, 82, 127, 0.5)
+}
+
+#tzClickText{
+    color: rgba(70, 120, 127, 0.5);  
+}
+
+/* ACCORDIAN */
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 7px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+
+
+
+/* SCROLL BAR */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f5f5f5; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ddd; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #ccc; 
+}
+
+
+
+
+
+

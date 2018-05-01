@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Virginia's Commercial Real Estate Collector</title>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.7/esri/css/main.css">
+    <link rel="stylesheet" href= "css/style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://js.arcgis.com/4.7/"></script>
+    <script src="js/main.js"></script>
+    
+</head>
+
+<body>
+    <div id="info-div">
+        Filter by property type<br><br>
+        <select id="filter">
+          <option value="" selected>All</option>
+          <option value="site" >Site/Land</option>
+          <option value="flex">Flex Buildings</option>
+          <option value="industrial">Industrial Buildings</option>
+          <option value="office">Office Building</option>
+        </select>
+    </div>
+    
+    <div id="editArea" class="editArea-container">
+    <div id="addFeatureDiv">
+      <h3 class="list-heading">Virginia's Commercial Real Estate Collector</h3>
+      <ul style="font-size: 13px; padding-left: 1.5em;">
+        <li>Click Add property button</li>
+        <li>Click on the map to create the property</li>
+      </ul>
+      <input type="button" class="edit-button" value="Add property" id="btnAddFeature">
+    </div>
+
+    <div id="updateInstructionDiv" style="text-align:center">
+      <p class="or-wrap"><span class="or-text">Or</span></p>
+      <p>Select an incident to edit or delete.</p>
+    </div>
+
+    <div id="featureUpdateDiv" style="display:none; margin-top: 1em;">
+      <h3 class="list-heading">Enter Property Information</h3>
+
+      <div id="attributeArea">
+        <button class="accordion">Basic Property Information</button>
+        <div class="panel">
+            <p>
+              <label for="Name">Property Name</label><button class="clearButton" onclick="document.getElementById('Name').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="Name" placeHolder="Enter Name"><br>
+
+              <label for="PropertyType">Property Type</label><button class="clearButton" onclick="document.getElementById('PropertyType').value = ''">clear</button>
+              <select class="dropDown" id="PropertyType" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Property Type</option>	
+              </select>
+
+              <label for="Available">Property Available</label><button class="clearButton" onclick="document.getElementById('Available').value = ''">clear</button>
+              <select class="dropDown" id="Available" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Property Available</option>	
+              </select>
+
+              <label for="AvailableDate">Date Available</label>	
+              <input class="date" type="date" id="AvailableDate">	
+
+              <label for="Address">Address</label> <button class="clearButton" onclick="document.getElementById('Address').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="Address" placeHolder="Enter Address"><br>	
+                
+              <label for="AddressCity">City</label> <button class="clearButton" onclick="document.getElementById('AddressCity').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="AddressCity" placeHolder="Enter City"><br>		
+
+              <label for="AddressState">State</label> <button class="clearButton" onclick="document.getElementById('AddressState').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="AddressState" placeHolder="Enter State"><br>	
+
+              <label for="AddressZip">Zip Code</label>	<button class="clearButton" onclick="document.getElementById('AddressZip').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="AddressZip" placeHolder="Enter Zip"><br>
+
+                <label for="FIPS">FIPS</label> <button class="clearButton" onclick="document.getElementById('FIPS').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="FIPS" placeHolder="Enter FIPS"><br>	
+
+              <label for="property_county_Name">Locality Name</label><button class="clearButton" onclick="document.getElementById('property_county_Name').value = ''">clear</button>	
+              <input class="inputInfo" type="text" id="property_county_Name" placeHolder="Enter Name"><br>
+
+              <label for="Latitude">Latitude</label> <button class="clearButton" onclick="document.getElementById('Latitude').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.000001" id="Latitude" placeHolder="Enter Latitude"><br>
+
+              <label for="Longtitude">Longtitude</label><button class="clearButton" onclick="document.getElementById('Longtitude').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.000001" id="Longtitude" placeHolder="Enter Longtitude"><br>		
+
+              <label for="property_contact_FirstName">Property Contact First Name</label>	<button class="clearButton" onclick="document.getElementById('property_contact_FirstName').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="property_contact_FirstName" placeHolder="Enter Name"><br>	
+
+              <label for="property_contact_LastName">Property Contact Last Name</label>	<button class="clearButton" onclick="document.getElementById('property_contact_LastName').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="property_contact_LastName" placeHolder="Enter Name"><br>	
+
+              <label for="photoURL">URL to a Photo of the Property</label><button class="clearButton" onclick="document.getElementById('photoURL').value = ''">clear</button>	
+              <input class="inputInfo" type="text" id="photoURL" placeHolder="Enter URL"><br>		
+            </p>
+        </div>
+
+        <button class="accordion">Building Specific Information</button>
+        <div class="panel">
+            <p>
+              <label for="PubliclyOwned">Property Publicly Owned</label>	<button class="clearButton" onclick="document.getElementById('PubliclyOwned').value = ''">clear</button>
+              <select class="dropDown" id="PubliclyOwned" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Property Publicly Owned</option>	
+              </select>
+
+              <label for="Sale">Sale</label>	<button class="clearButton" onclick="document.getElementById('Sale').value = ''">clear</button>
+              <select class="dropDown" id="Sale" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Sale</option>	
+              </select>
+
+              <label for="SalePrice">Sale Price</label><button class="clearButton" onclick="document.getElementById('SalePrice').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.01" id="SalePrice" placeHolder="Enter Price"><br>		
+              
+              <label for="CeilingHeightCenter">Building Ceiling Height (ft)</label><button class="clearButton" onclick="document.getElementById('CeilingHeightCenter').value = ''">clear</button>
+              <input class="inputInfo" type="number" id="CeilingHeightCenter" placeHolder="Enter Center"><br>	
+
+              <label for="CallCenter">Call Center</label><button class="clearButton" onclick="document.getElementById('CallCenter').value = ''">clear</button>
+              <select class="dropDown" id="CallCenter" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Call Center</option>	
+              </select>
+
+              <label for="CallCenterSpace">Call Center Space (sf)</label><button class="clearButton" onclick="document.getElementById('CallCenterSpace').value = ''">clear</button>
+              <input class="inputInfo" type="number" id="CallCenterSpace" placeHolder="Enter Space"><br>	
+
+              <label for="DataCenter">Data Center</label><button class="clearButton" onclick="document.getElementById('DataCenter').value = ''">clear</button>
+              <select class="dropDown" id="DataCenter" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Data Center</option>	
+              </select>
+
+              <label for="DataCenterSpace">Data Center Space (sf)</label>	<button class="clearButton" onclick="document.getElementById('DataCenterSpace').value = ''">clear</button>
+              <input class="inputInfo" type="number" id="DataCenterSpace" placeHolder="Enter Space"><br>	
+
+              <label for="FreezerSpace">Available Freezer Space</label>	<button class="clearButton" onclick="document.getElementById('FreezerSpace').value = ''">clear</button>
+              <select class="dropDown" id="FreezerSpace" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Available Freezer Space</option>	
+              </select>
+
+              <label for="Multitenant">Multitenant</label><button class="clearButton" onclick="document.getElementById('Multitenant').value = ''">clear</button>
+              <select class="dropDown" id="Multitenant" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Multitenant</option>	
+              </select>
+
+              <label for="building_Construct_type">Building Construction Type</label><button class="clearButton" onclick="document.getElementById('building_Construct_type').value = ''">clear</button>	
+              <select class="dropDown" id="building_Construct_type" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Building Construction Type</option>	
+              </select>
+
+              <label for="LEED">LEED Certified</label><button class="clearButton" onclick="document.getElementById('LEED').value = ''">clear</button>
+              <select class="dropDown" id="LEED" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select LEED Certified</option>	
+              </select>
+
+              <label for="Subdividable">Subdividable</label><button class="clearButton" onclick="document.getElementById('Subdividable').value = ''">clear</button>
+              <select class="dropDown" id="Subdividable" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Subdividable</option>	
+              </select>
+
+              <label for="NumberOfStories">Number of Stories</label><button class="clearButton" onclick="document.getElementById('NumberOfStories').value = ''">clear</button>	
+              <input class="inputInfo" type="number" id="NumberOfStories" placeHolder="Enter Stories"><br>	
+
+              <label for="ParkingSpaces">Number of Available Parking Spaces</label>	<button class="clearButton" onclick="document.getElementById('ParkingSpaces').value = ''">clear</button>
+              <input class="inputInfo" type="number" id="ParkingSpaces" placeHolder="Enter Spaces"><br>		
+            </p>
+        </div>
+
+        <button class="accordion">Transportation Infrastructure</button>
+        <div class="panel">
+            <p>
+              <label for="property_aircom_AIR_NAME">Name of Nearest Commercial Airport</label>	<button class="clearButton" onclick="document.getElementById('property_aircom_AIR_NAME').value = ''">clear</button>
+              <select class="dropDown" id="property_aircom_AIR_NAME" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select Nearest Commercial Airport</option>	
+              </select>
+
+              <label for="AirportCommDistance">Driving Distance to nearest Commercial Airport (miles)</label>	<button class="clearButton" onclick="document.getElementById('AirportCommDistance').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="AirportCommDistance" placeHolder="Enter Distance"><br>
+
+              <label for="HighwayAccessName">Name of nearest Limited Access Highway</label>	<button class="clearButton" onclick="document.getElementById('HighwayAccessName').value = ''">clear</button>
+              <select class="dropDown" id="HighwayAccessName" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Nearest LA Highway</option>	
+              </select>
+
+              <label for="HighwayAccessDistance">Distance to nearest Limited Access Highway (miles)</label><button class="clearButton" onclick="document.getElementById('HighwayAccessDistance').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="HighwayAccessDistance" placeHolder="Enter Distance"><br>	
+
+              <label for="property_RailRoad_RR_NAME">Nearest Rail Provider</label>	<button class="clearButton" onclick="document.getElementById('property_RailRoad_RR_NAME').value = ''">clear</button>
+              <select class="dropDown" id="property_RailRoad_RR_NAME" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select Nearest Rail Provider</option>	
+              </select>
+
+              <label for="RailroadDistance">Distance to nearest Freight Rail</label><button class="clearButton" onclick="document.getElementById('RailroadDistance').value = ''">clear</button>	
+              <input class="inputInfo" type="number" step="0.1" id="RailroadDistance" placeHolder="Enter Distance"><br>
+
+              <label for="property_SecondaryRR_NAME">Secondary Rail Provider</label>	<button class="clearButton" onclick="document.getElementById('property_SecondaryRR_NAME').value = ''">clear</button>
+              <select class="dropDown" id="property_SecondaryRR_NAME" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Secondary Rail Provider</option>	
+              </select>
+
+              <label for="RailroadSiding">Railroad Siding on-Site</label>	<button class="clearButton" onclick="document.getElementById('RailroadSiding').value = ''">clear</button>
+              <select class="dropDown" id="RailroadSiding" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Railroad Siding on-Site</option>	
+              </select>
+
+              <label for="RailroadSidingCanBeInstalled">Railroad Siding can be Installed on-Site</label><button class="clearButton" onclick="document.getElementById('RailroadSidingCanBeInstalled').value = ''">clear</button>
+              <select class="dropDown" id="RailroadSidingCanBeInstalled" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select RR Siding can be Installed</option>	
+              </select>
+            </p>
+        </div>
+
+        <button class="accordion">Other Infrastructure</button>
+        <div class="panel">
+            <p>
+              <label for="NaturalGasProvider">Natural Gas Provider</label>	<button class="clearButton" onclick="document.getElementById('NaturalGasProvider').value = ''">clear</button>
+              <select class="dropDown" id="NaturalGasProvider" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Natural Gas Provider</option>	
+              </select>
+
+              <label for="NaturalGasAvailable">Natural Gas Available</label>	<button class="clearButton" onclick="document.getElementById('NaturalGasAvailable').value = ''">clear</button>
+              <select class="dropDown" id="NaturalGasAvailable" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Natural Gas Available</option>	
+              </select>
+
+              <label for="NaturalGasDistance">Distance to nearest Gas Line</label>	<button class="clearButton" onclick="document.getElementById('NaturalGasDistance').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="NaturalGasDistance" placeHolder="Enter Distance"><br>		
+
+              <label for="property_ElectricCompany">Electric Provider</label>	<button class="clearButton" onclick="document.getElementById('property_ElectricCompany').value = ''">clear</button>
+              <select class="dropDown" id="property_ElectricCompany" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select Electric Provider</option>	
+              </select>
+
+              <label for="Voltage">Available Voltage</label><button class="clearButton" onclick="document.getElementById('Voltage').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="Voltage" placeHolder="Enter Voltage"><br>	
+                
+              <label for="ElectricRedundant">Redundant Electric Supply Available</label><button class="clearButton" onclick="document.getElementById('ElectricRedundant').value = ''">clear</button>
+              <select class="dropDown" id="ElectricRedundant" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select Redundant Electric Supply Available</option>
+              </select>
+
+              <label for="WaterAvailableCapacityToPropert">Water Capacity Available to Property (mgd)</label><button class="clearButton" onclick="document.getElementById('WaterAvailableCapacityToPropert').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="WaterAvailableCapacityToPropert" placeHolder="Enter Available Capacity"><br>		
+
+              <label for="Water_Name">Water Provider</label><button class="clearButton" onclick="document.getElementById('Water_Name').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="Water_Name" placeHolder="Enter Name"><br>
+                
+              <label for="WaterLineSize">Water Line Size (in)</label><button class="clearButton" onclick="document.getElementById('WaterLineSize').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="WaterLineSize" placeHolder="Enter Size"><br>		
+
+              <label for="WaterTankCapacity">Water Tank Capacity</label><button class="clearButton" onclick="document.getElementById('WaterTankCapacity').value = ''">clear</button>	
+              <input class="inputInfo" type="number" step="0.1" id="WaterTankCapacity" placeHolder="Enter Capacity"><br>	
+
+              <label for="WaterOnSiteTreatmentPlant">Water Treatment Plant on-Site</label>	<button class="clearButton" onclick="document.getElementById('WaterOnSiteTreatmentPlant').value = ''">clear</button>
+              <select class="dropDown" id="WaterOnSiteTreatmentPlant" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Water Treatment Plant on-Site</option>	
+              </select>
+
+              <label for="WellCapacity">Well Capacity</label>	<button class="clearButton" onclick="document.getElementById('WellCapacity').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="WellCapacity" placeHolder="Enter Capacity"><br>
+
+              <label for="SepticSystem">Septic System</label><button class="clearButton" onclick="document.getElementById('SepticSystem').value = ''">clear</button>
+              <select class="dropDown" id="SepticSystem" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Septic System</option>	
+              </select>
+
+              <label for="SepticCapacity">Septic Capacity</label>	<button class="clearButton" onclick="document.getElementById('SepticCapacity').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="SepticCapacity" placeHolder="Enter Capacity"><br>	
+
+              <label for="SEWER_NAME">Sewer Provider</label><button class="clearButton" onclick="document.getElementById('SEWER_NAME').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="SEWER_NAME" placeHolder="Enter NAME"><br>
+
+              <label for="SewerLineSize">Sewer Pipe Size (in)</label><button class="clearButton" onclick="document.getElementById('SewerLineSize').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.1" id="SewerLineSize" placeHolder="Enter Size"><br>		
+
+              <label for="SewerOnSiteTreatmentPlant">Sewer on-Site Treatment Plant</label>	<button class="clearButton" onclick="document.getElementById('SewerOnSiteTreatmentPlant').value = ''">clear</button>
+              <select class="dropDown" id="SewerOnSiteTreatmentPlant" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select Sewer on-Site Treatment Plant</option>	
+              </select>
+
+              <label for="TelecommProvider">Telecomm Provider</label>	<button class="clearButton" onclick="document.getElementById('TelecommProvider').value = ''">clear</button>
+              <select class="dropDown" id="TelecommProvider" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Telecomm Provider</option>	
+              </select>
+
+              <label for="TelecommFiber">Available Fiber</label><button class="clearButton" onclick="document.getElementById('TelecommFiber').value = ''">clear</button>	
+              <select class="dropDown" id="TelecommFiber" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Available Fiber</option>	
+              </select>
+            </p>
+        </div>
+
+        <button class="accordion">Other</button>
+        <div class="panel">
+            <p>
+              <label for="Waterway">Property Access to a Waterway</label>	<button class="clearButton" onclick="document.getElementById('Waterway').value = ''">clear</button>
+              <select class="dropDown" id="Waterway" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Property Access to a Waterway</option>	
+              </select>
+
+              <label for="WaterwayName">Waterway Name</label><button class="clearButton" onclick="document.getElementById('WaterwayName').value = ''">clear</button>
+              <input class="inputInfo" type="text" id="WaterwayName" placeHolder="Enter Name"><br>
+
+              <label for="WaterwayChannelDepth">Waterway Channel Depth (ft)</label>	<button class="clearButton" onclick="document.getElementById('WaterwayChannelDepth').value = ''">clear</button>
+              <input class="inputInfo" type="number" id="WaterwayChannelDepth" placeHolder="Enter Depth"><br>		
+
+              <label for="NatureOfContamination">Known Contaminants on Property</label>	<button class="clearButton" onclick="document.getElementById('NatureOfContamination').value = ''">clear</button>
+              <select class="dropDown" id="NatureOfContamination" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Known Contaminants on Property</option>	
+              </select>
+
+              <label for="Wetlands">Wetlands on-Site</label><button class="clearButton" onclick="document.getElementById('Wetlands').value = ''">clear</button>
+              <select class="dropDown" id="Wetlands" required="" aria-required="true" autocomplete="off">
+                  <option value="" disabled selected>Select Wetlands on-Site</option>
+              </select>
+
+              <label for="ZoningRestrictions">Zoning Restrictions</label>	<button class="clearButton" onclick="document.getElementById('ZoningRestrictions').value = ''">clear</button>
+              <select class="dropDown" id="ZoningRestrictions" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Zoning Restrictions</option>	
+              </select>
+
+              <label for="ZoningClassification">Zoning Classification</label>	<button class="clearButton" onclick="document.getElementById('ZoningClassification').value = ''">clear</button>
+              <select class="dropDown" id="ZoningClassification" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select Zoning Classification</option>	
+              </select>
+            </p>
+        </div>
+
+        <button class="accordion">Incentives Qualifiers</button>
+        <div class="panel">
+            <p>
+              <label for="VAEnterpriseZone"> <button id= "ezCheck" class="zoneCheck"> In an Enterprise Zone <h6 id="ezClickText">Click to view map layer</h6></button></label>	<button class="clearButton" onclick="document.getElementById('VAEnterpriseZone').value = ''">clear</button>
+              <select class="dropDown" id="VAEnterpriseZone" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select In an Enterprise Zone</option>	
+              </select>
+
+              <label for="ForeignTradeZone"><button id= "tzCheck" class="zoneCheck"> In a Technology Zone <h6 id="tzClickText">Click to view map layer</h6></button></label>	<button class="clearButton" onclick="document.getElementById('ForeignTradeZone').value = ''">clear</button>
+              <select class="dropDown" id="ForeignTradeZone" required="" aria-required="true" autocomplete="off">	
+                  <option value="" disabled selected>Select In a Technology Zone</option>	
+              </select>
+            </p>
+        </div>
+        <input type="button" class="edit-button" value="Update incident info" id="btnUpdate">
+      </div>
+
+      <div id="deleteArea">
+        <input type="button" class="edit-button" value="Delete incident" id="btnDelete">
+      </div>
+    </div>
+    </div>
+    <div id="viewDiv"></div>
+    
+</body>
+</html>
