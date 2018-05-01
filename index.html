@@ -331,15 +331,19 @@
         <button class="accordion">Incentives Qualifiers</button>
         <div class="panel">
             <p>
-              <label for="VAEnterpriseZone"> <button id= "ezCheck" class="zoneCheck"> In an Enterprise Zone <h6 id="ezClickText">Click to view map layer</h6></button></label>	<button class="clearButton" onclick="document.getElementById('VAEnterpriseZone').value = ''">clear</button>
-              <select class="dropDown" id="VAEnterpriseZone" required="" aria-required="true" autocomplete="off">	
-                  <option value="" disabled selected>Select In an Enterprise Zone</option>	
-              </select>
-
-              <label for="ForeignTradeZone"><button id= "tzCheck" class="zoneCheck"> In a Technology Zone <h6 id="tzClickText">Click to view map layer</h6></button></label>	<button class="clearButton" onclick="document.getElementById('ForeignTradeZone').value = ''">clear</button>
-              <select class="dropDown" id="ForeignTradeZone" required="" aria-required="true" autocomplete="off">	
+              <label for="VAEnterpriseZone" id = "incLabel">In an Enterprise Zone </label>	
+                <button class="clearButton" onclick="document.getElementById('VAEnterpriseZone').value = ''">clear</button>
+                <select class="dropDown" id="VAEnterpriseZone" required="" aria-required="true" autocomplete="off">	
+                    <option value="" disabled selected>Select In an Enterprise Zone</option>	
+                </select>
+                <button id= "ezCheck" class="zoneCheck">  <h6 id="ezClickText">Click to see layer</h6></button>
+ 
+              <label for="ForeignTradeZone" id = "incLabel">In a Technology Zone </label>	
+                <button class="clearButton" onclick="document.getElementById('ForeignTradeZone').value = ''">clear</button>
+                <select class="dropDown" id="ForeignTradeZone" required="" aria-required="true" autocomplete="off">	
                   <option value="" disabled selected>Select In a Technology Zone</option>	
-              </select>
+                </select>
+                <button id= "tzCheck" class="zoneCheck"> <h6 id="tzClickText">Click to see layer</h6></button>
             </p>
         </div>
         <input type="button" class="edit-button" value="Update property info" id="btnUpdate">

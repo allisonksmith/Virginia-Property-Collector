@@ -87,6 +87,12 @@ option:not(:nth-child(1)){
     color:black;
 }
 
+#VAEnterpriseZone,
+#ForeignTradeZone{
+    width: 80%;
+    float:right;
+}
+
 .date {
     font-size: 12px;
     height: 32px;
@@ -139,7 +145,10 @@ input:valid {
   border: 1px solid green;
 }
 
-
+#incLabel{
+    width:80%;
+    float:left;
+}
 
 .clearButton {
     background:none!important;
@@ -157,18 +166,23 @@ input:valid {
 .zoneCheck{
     background:none!important;
     border:none;
-    padding-top:10px;
-    padding-bottom:5px;
+    padding:0;
     text-align: left;
     cursor: pointer;
+    width:20%;
+    float:left;
 }
 
-#ezClickText{
+#ezClickText{   
     color: rgba(104, 82, 127, 0.5);
+    padding:0;
+    text-align: center
 }
 
 #tzClickText{
-    color: rgba(70, 120, 127, 0.5);  
+    color: rgba(70, 120, 127, 0.5); 
+    padding:0;
+    text-align: center
 }
 
 /* LAYER LIST LEGEND */
