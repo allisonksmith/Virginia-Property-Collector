@@ -24,6 +24,11 @@ $(document).ready(function(){
         $(this).css('color','black');
     });
     
+    var body = document.getElementById("body");
+    body.addEventListener('touchmove', function(e){
+        e.preventDefault();
+    },false);
+
    
     
     require([
@@ -432,7 +437,11 @@ $(document).ready(function(){
             } else {
                 incentives.sublayers.items["1"].visible = true;
             }
-        })
+        });
+        
+       
+        
+        
 
         // *****************************************************
         // set up for editing
