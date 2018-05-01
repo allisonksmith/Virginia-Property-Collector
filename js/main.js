@@ -153,7 +153,10 @@ $(document).ready(function(){
         var view = new MapView({
           container: "viewDiv",
           map: map,
-          extent: initialExtent
+          extent: initialExtent,
+          constraints:{
+              rotationEnabled: false
+          }
         });
 
         // add map image layer from service from service

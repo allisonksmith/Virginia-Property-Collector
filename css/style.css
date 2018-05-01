@@ -155,6 +155,10 @@ input:valid {
     color: rgba(70, 120, 127, 0.5);  
 }
 
+.esri-ui-bottom-left{
+    z-index: 0;
+}
+
 /* ACCORDIAN */
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
