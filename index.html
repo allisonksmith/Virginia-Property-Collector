@@ -10,13 +10,12 @@
     <link rel="stylesheet" href="https://js.arcgis.com/4.7/esri/css/main.css">
     <link rel="stylesheet" href= "css/style.css">
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://js.arcgis.com/4.7/"></script>
-    <script src="js/main.js"></script>
+    
     
 </head>
 
 <body>
+    
     <div id="info-div">
         Filter by property type<br><br>
         <select id="filter">
@@ -40,7 +39,7 @@
 
     <div id="updateInstructionDiv" style="text-align:center">
       <p class="or-wrap"><span class="or-text">Or</span></p>
-      <p>Select an incident to edit or delete.</p>
+      <p>Select an property to edit or delete.</p>
     </div>
 
     <div id="featureUpdateDiv" style="display:none; margin-top: 1em;">
@@ -64,7 +63,7 @@
               </select>
 
               <label for="AvailableDate">Date Available</label>	
-              <input class="date" type="date" id="AvailableDate">	
+              <input class="date" type="date" id="AvailableDate" max = "9999-12-31">	
 
               <label for="Address">Address</label> <button class="clearButton" onclick="document.getElementById('Address').value = ''">clear</button>
               <input class="inputInfo" type="text" id="Address" placeHolder="Enter Address"><br>	
@@ -85,10 +84,10 @@
               <input class="inputInfo" type="text" id="property_county_Name" placeHolder="Enter Name"><br>
 
               <label for="Latitude">Latitude</label> <button class="clearButton" onclick="document.getElementById('Latitude').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.000001" id="Latitude" placeHolder="Enter Latitude"><br>
+              <input class="inputInfo" type="number" step="0.00000001" min="-90" max="90" id="Latitude" placeHolder="Enter Latitude"><br>
 
-              <label for="Longtitude">Longtitude</label><button class="clearButton" onclick="document.getElementById('Longtitude').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.000001" id="Longtitude" placeHolder="Enter Longtitude"><br>		
+              <label for="Longtitude">Longitude</label><button class="clearButton" onclick="document.getElementById('Longtitude').value = ''">clear</button>
+              <input class="inputInfo" type="number" step="0.00000001" min="-180" max="180" id="Longtitude" placeHolder="Enter Longitude"><br>		
 
               <label for="property_contact_FirstName">Property Contact First Name</label>	<button class="clearButton" onclick="document.getElementById('property_contact_FirstName').value = ''">clear</button>
               <input class="inputInfo" type="text" id="property_contact_FirstName" placeHolder="Enter Name"><br>	
@@ -343,15 +342,25 @@
               </select>
             </p>
         </div>
-        <input type="button" class="edit-button" value="Update incident info" id="btnUpdate">
+        <input type="button" class="edit-button" value="Update property info" id="btnUpdate">
       </div>
 
       <div id="deleteArea">
-        <input type="button" class="edit-button" value="Delete incident" id="btnDelete">
+        <input type="button" class="edit-button" value="Delete property" id="btnDelete">
       </div>
     </div>
     </div>
     <div id="viewDiv"></div>
+    <div id ="ezLegend"><i class="fas fa-square-full fa-2x"></i></div>
+    <div id ="tzLegend"><i class="fas fa-square-full fa-2x"></i></div>
+    
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="https://js.arcgis.com/4.7/"></script>
+    <script src="js/main.js"></script>
     
 </body>
 </html>

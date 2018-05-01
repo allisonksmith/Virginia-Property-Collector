@@ -23,7 +23,47 @@ $(document).ready(function(){
         console.log(change);
         $(this).css('color','black');
     });
+   
+    var mistakes = [];
+   
+    $("input").change(function(){
+        if(!this.checkValidity()){
+            if (mistakes.includes(this.id)){
+                //do nothing
+            } else{
+                mistakes.push(this.id);
+            }
+        } else {
+            var index = mistakes.indexOf(this.id);
+            if (index !== -1){mistakes.splice(index,1);}
+        }
+        mistakeCheck(mistakes)
+    });
     
+    function mistakeCheck(mistakes){
+        console.log(mistakes);
+        if(mistakes.length > 0){
+            document.getElementById("btnUpdate").disabled = true;
+            document.getElementById("btnUpdate").value = "Correct entry mistakes to submit";
+        } else {
+            document.getElementById("btnUpdate").disabled = false;
+            document.getElementById("btnUpdate").value = 'Submit Property Update';
+        }
+    };
+    
+    /*
+    for (item in fieldList){
+            var name = fieldList[item];
+            var element = dom.byId(name);
+            $(element).change(function(){
+                if(!element.checkValidity()){
+                    console.log(element.validationMessage);
+                } else {
+                    console.log("im ok!")
+                }
+            });
+        };
+    */
     
     require([
         "esri/Map",
@@ -354,8 +394,17 @@ $(document).ready(function(){
                 view: view,
                 listItemCreatedFunction: function(event){
                     var item = event.item;
+                    
                     if (item.title === "Incentive Zone Boundaries"){
                         item.open = true;
+                        item.children.items["0"].panel = {
+                            content: document.getElementById("tzLegend"),
+                            open: true
+                        }
+                        item.children.items["1"].panel = {
+                            content: document.getElementById("ezLegend"),
+                            open: true
+                        }
                     }
                 }
             });
@@ -433,7 +482,13 @@ $(document).ready(function(){
             }
         });
         
-       
+        
+        $('#attributeArea input', '#attributeArea select').each(function(){
+            $(this).change(function(){
+                console.log("i changed")
+            })
+        })
+        
         
         
 

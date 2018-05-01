@@ -28,13 +28,18 @@ h6{
   width: 300px;
 }
 
-.esri-expand__container--expanded{
-    background-color:aqua;
-}
+
 
 .edit-button:hover,
-.edit-button:focus {
+.edit-button:focus{
   background-color: #e4e4e4;
+}
+
+.edit-button:disabled{
+    border: 2px solid red;
+    color: darkgray;
+    background-color: lightgrey;
+    cursor: not-allowed;
 }
 
 .inputInfo {
@@ -98,7 +103,8 @@ option:not(:nth-child(1)){
   color: #323232;
 }
 
-.edit-button {
+.edit-button,
+.edit-button:enabled{
   font-size: 14px;
   height: 32px;
   margin-top: 10px;
@@ -106,6 +112,7 @@ option:not(:nth-child(1)){
   background-color: transparent;
   border: 1px solid #0079c1;
   color: #0079c1;
+  cursor:pointer;
 }
 
 .or-wrap {
@@ -132,6 +139,8 @@ input:valid {
   border: 1px solid green;
 }
 
+
+
 .clearButton {
     background:none!important;
     color:#0079c1;
@@ -148,19 +157,39 @@ input:valid {
 .zoneCheck{
     background:none!important;
     border:none;
-    padding:0;
+    padding:2.5px;
     text-align: left;
     cursor: pointer;
 }
 
 #ezClickText{
-    color: rgba(104, 82, 127, 0.5)
+    color: rgba(104, 82, 127, 0.5);
 }
 
 #tzClickText{
     color: rgba(70, 120, 127, 0.5);  
 }
 
+/* LAYER LIST LEGEND */
+#ezLegend{
+    color: rgba(104, 82, 127, 0.5);
+    padding-left: 30px;
+}
+
+#tzLegend{
+    color: rgba(70, 120, 127, 0.5);
+    padding-left: 30px;
+}
+.esri-layer-list__item-container{
+    padding-bottom: 5px;
+}
+
+.esri-layer-list__item-actions-menu{
+    visibility: hidden;
+}
+
+
+/* PUSH BACK LAYER TOGGLE */
 .esri-ui-bottom-left{
     z-index: 0;
 }
