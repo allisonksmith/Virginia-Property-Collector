@@ -409,7 +409,7 @@ $(document).ready(function(){
                 content: editArea
             });
             // test if on mobile device - close on moble open on other
-            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 editExpand.expanded = false;
             } else {
                 editExpand.expanded = true;              
@@ -544,6 +544,10 @@ $(document).ready(function(){
                   updateFeatures: [editFeature]
               };
               applyEdits(edits);
+              //close panel on mobile  
+              if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                editExpand.collapse();
+              };  
             }
           });
 
@@ -551,9 +555,17 @@ $(document).ready(function(){
           // BTNADDFEATURE CLICK EVENT
           // create a new feature at the click location
           on(dom.byId("btnAddFeature"), "click", function() {
+            //close panel on mobile 
+            if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                editExpand.collapse();
+            };
             featureLayer.definitionExpression = ""
             unselectFeature();
             on.once(view, "click", function(event) {
+              //open panel on mobile
+              if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                    editExpand.expand();
+                };
               event.stopPropagation();
 
               if (event.mapPoint) {
@@ -597,6 +609,10 @@ $(document).ready(function(){
               deleteFeatures: [editFeature]
             };
             applyEdits(edits);
+            //close panel on mobile
+            if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                editExpand.collapse();
+            };
           });
 
           /* *****************************************************
