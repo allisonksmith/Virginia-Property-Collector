@@ -114,10 +114,10 @@
               </select>
 
               <label for="SalePrice">Sale Price</label><button class="clearButton" onclick="document.getElementById('SalePrice').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.01" id="SalePrice" placeHolder="Enter Price"><br>		
+              <input class="inputInfo" type="number" step="0.01" min="0" id="SalePrice" placeHolder="Enter Price"><br>		
               
               <label for="CeilingHeightCenter">Building Ceiling Height (ft)</label><button class="clearButton" onclick="document.getElementById('CeilingHeightCenter').value = ''">clear</button>
-              <input class="inputInfo" type="number" id="CeilingHeightCenter" placeHolder="Enter Center"><br>	
+              <input class="inputInfo" type="number" min="0" id="CeilingHeightCenter"  placeHolder="Enter Center"><br>	
 
               <label for="CallCenter">Call Center</label><button class="clearButton" onclick="document.getElementById('CallCenter').value = ''">clear</button>
               <select class="dropDown" id="CallCenter" required="" aria-required="true" autocomplete="off">	
@@ -125,7 +125,7 @@
               </select>
 
               <label for="CallCenterSpace">Call Center Space (sf)</label><button class="clearButton" onclick="document.getElementById('CallCenterSpace').value = ''">clear</button>
-              <input class="inputInfo" type="number" id="CallCenterSpace" placeHolder="Enter Space"><br>	
+              <input class="inputInfo" type="number" min="0" id="CallCenterSpace" placeHolder="Enter Space"><br>	
 
               <label for="DataCenter">Data Center</label><button class="clearButton" onclick="document.getElementById('DataCenter').value = ''">clear</button>
               <select class="dropDown" id="DataCenter" required="" aria-required="true" autocomplete="off">	
@@ -133,7 +133,7 @@
               </select>
 
               <label for="DataCenterSpace">Data Center Space (sf)</label>	<button class="clearButton" onclick="document.getElementById('DataCenterSpace').value = ''">clear</button>
-              <input class="inputInfo" type="number" id="DataCenterSpace" placeHolder="Enter Space"><br>	
+              <input class="inputInfo" type="number" min="0" id="DataCenterSpace" placeHolder="Enter Space"><br>	
 
               <label for="FreezerSpace">Available Freezer Space</label>	<button class="clearButton" onclick="document.getElementById('FreezerSpace').value = ''">clear</button>
               <select class="dropDown" id="FreezerSpace" required="" aria-required="true" autocomplete="off">	
@@ -161,10 +161,10 @@
               </select>
 
               <label for="NumberOfStories">Number of Stories</label><button class="clearButton" onclick="document.getElementById('NumberOfStories').value = ''">clear</button>	
-              <input class="inputInfo" type="number" id="NumberOfStories" placeHolder="Enter Stories"><br>	
+              <input class="inputInfo" type="number" id="NumberOfStories" min="0" placeHolder="Enter Stories"><br>	
 
               <label for="ParkingSpaces">Number of Available Parking Spaces</label>	<button class="clearButton" onclick="document.getElementById('ParkingSpaces').value = ''">clear</button>
-              <input class="inputInfo" type="number" id="ParkingSpaces" placeHolder="Enter Spaces"><br>		
+              <input class="inputInfo" type="number" min="0" id="ParkingSpaces" placeHolder="Enter Spaces"><br>		
             </p>
         </div>
 
@@ -177,7 +177,7 @@
               </select>
 
               <label for="AirportCommDistance">Driving Distance to nearest Commercial Airport (miles)</label>	<button class="clearButton" onclick="document.getElementById('AirportCommDistance').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="AirportCommDistance" placeHolder="Enter Distance"><br>
+              <input class="inputInfo" type="number" min="0" step="0.1" id="AirportCommDistance" placeHolder="Enter Distance"><br>
 
               <label for="HighwayAccessName">Name of nearest Limited Access Highway</label>	<button class="clearButton" onclick="document.getElementById('HighwayAccessName').value = ''">clear</button>
               <select class="dropDown" id="HighwayAccessName" required="" aria-required="true" autocomplete="off">	
@@ -185,15 +185,15 @@
               </select>
 
               <label for="HighwayAccessDistance">Distance to nearest Limited Access Highway (miles)</label><button class="clearButton" onclick="document.getElementById('HighwayAccessDistance').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="HighwayAccessDistance" placeHolder="Enter Distance"><br>	
+              <input class="inputInfo" type="number" min="0" step="0.1" id="HighwayAccessDistance" placeHolder="Enter Distance"><br>	
 
               <label for="property_RailRoad_RR_NAME">Nearest Rail Provider</label>	<button class="clearButton" onclick="document.getElementById('property_RailRoad_RR_NAME').value = ''">clear</button>
               <select class="dropDown" id="property_RailRoad_RR_NAME" required="" aria-required="true" autocomplete="off">
                   <option value="" disabled selected>Select Nearest Rail Provider</option>	
               </select>
 
-              <label for="RailroadDistance">Distance to nearest Freight Rail</label><button class="clearButton" onclick="document.getElementById('RailroadDistance').value = ''">clear</button>	
-              <input class="inputInfo" type="number" step="0.1" id="RailroadDistance" placeHolder="Enter Distance"><br>
+              <label for="RailroadDistance">Distance to nearest Freight Rail (miles)</label><button class="clearButton" onclick="document.getElementById('RailroadDistance').value = ''">clear</button>	
+              <input class="inputInfo" type="number" min="0" step="0.1" id="RailroadDistance" placeHolder="Enter Distance"><br>
 
               <label for="property_SecondaryRR_NAME">Secondary Rail Provider</label>	<button class="clearButton" onclick="document.getElementById('property_SecondaryRR_NAME').value = ''">clear</button>
               <select class="dropDown" id="property_SecondaryRR_NAME" required="" aria-required="true" autocomplete="off">	
@@ -226,7 +226,7 @@
               </select>
 
               <label for="NaturalGasDistance">Distance to nearest Gas Line</label>	<button class="clearButton" onclick="document.getElementById('NaturalGasDistance').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="NaturalGasDistance" placeHolder="Enter Distance"><br>		
+              <input class="inputInfo" type="number" min="0" step="0.1" id="NaturalGasDistance" placeHolder="Enter Distance"><br>		
 
               <label for="property_ElectricCompany">Electric Provider</label>	<button class="clearButton" onclick="document.getElementById('property_ElectricCompany').value = ''">clear</button>
               <select class="dropDown" id="property_ElectricCompany" required="" aria-required="true" autocomplete="off">
@@ -242,16 +242,16 @@
               </select>
 
               <label for="WaterAvailableCapacityToPropert">Water Capacity Available to Property (mgd)</label><button class="clearButton" onclick="document.getElementById('WaterAvailableCapacityToPropert').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="WaterAvailableCapacityToPropert" placeHolder="Enter Available Capacity"><br>		
+              <input class="inputInfo" type="number" min="0" step="0.1" id="WaterAvailableCapacityToPropert" placeHolder="Enter Available Capacity"><br>		
 
               <label for="Water_Name">Water Provider</label><button class="clearButton" onclick="document.getElementById('Water_Name').value = ''">clear</button>
               <input class="inputInfo" type="text" id="Water_Name" placeHolder="Enter Name"><br>
                 
               <label for="WaterLineSize">Water Line Size (in)</label><button class="clearButton" onclick="document.getElementById('WaterLineSize').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="WaterLineSize" placeHolder="Enter Size"><br>		
+              <input class="inputInfo" type="number" min="0" step="0.1" id="WaterLineSize" placeHolder="Enter Size"><br>		
 
               <label for="WaterTankCapacity">Water Tank Capacity</label><button class="clearButton" onclick="document.getElementById('WaterTankCapacity').value = ''">clear</button>	
-              <input class="inputInfo" type="number" step="0.1" id="WaterTankCapacity" placeHolder="Enter Capacity"><br>	
+              <input class="inputInfo" type="number" min="0" step="0.1" id="WaterTankCapacity" placeHolder="Enter Capacity"><br>	
 
               <label for="WaterOnSiteTreatmentPlant">Water Treatment Plant on-Site</label>	<button class="clearButton" onclick="document.getElementById('WaterOnSiteTreatmentPlant').value = ''">clear</button>
               <select class="dropDown" id="WaterOnSiteTreatmentPlant" required="" aria-required="true" autocomplete="off">	
@@ -259,7 +259,7 @@
               </select>
 
               <label for="WellCapacity">Well Capacity</label>	<button class="clearButton" onclick="document.getElementById('WellCapacity').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="WellCapacity" placeHolder="Enter Capacity"><br>
+              <input class="inputInfo" type="number" min="0" step="0.1" id="WellCapacity" placeHolder="Enter Capacity"><br>
 
               <label for="SepticSystem">Septic System</label><button class="clearButton" onclick="document.getElementById('SepticSystem').value = ''">clear</button>
               <select class="dropDown" id="SepticSystem" required="" aria-required="true" autocomplete="off">	
@@ -267,13 +267,13 @@
               </select>
 
               <label for="SepticCapacity">Septic Capacity</label>	<button class="clearButton" onclick="document.getElementById('SepticCapacity').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="SepticCapacity" placeHolder="Enter Capacity"><br>	
+              <input class="inputInfo" type="number" min="0" step="0.1" id="SepticCapacity" placeHolder="Enter Capacity"><br>	
 
               <label for="SEWER_NAME">Sewer Provider</label><button class="clearButton" onclick="document.getElementById('SEWER_NAME').value = ''">clear</button>
               <input class="inputInfo" type="text" id="SEWER_NAME" placeHolder="Enter NAME"><br>
 
               <label for="SewerLineSize">Sewer Pipe Size (in)</label><button class="clearButton" onclick="document.getElementById('SewerLineSize').value = ''">clear</button>
-              <input class="inputInfo" type="number" step="0.1" id="SewerLineSize" placeHolder="Enter Size"><br>		
+              <input class="inputInfo" type="number" min="0" step="0.1" id="SewerLineSize" placeHolder="Enter Size"><br>		
 
               <label for="SewerOnSiteTreatmentPlant">Sewer on-Site Treatment Plant</label>	<button class="clearButton" onclick="document.getElementById('SewerOnSiteTreatmentPlant').value = ''">clear</button>
               <select class="dropDown" id="SewerOnSiteTreatmentPlant" required="" aria-required="true" autocomplete="off">
@@ -304,7 +304,7 @@
               <input class="inputInfo" type="text" id="WaterwayName" placeHolder="Enter Name"><br>
 
               <label for="WaterwayChannelDepth">Waterway Channel Depth (ft)</label>	<button class="clearButton" onclick="document.getElementById('WaterwayChannelDepth').value = ''">clear</button>
-              <input class="inputInfo" type="number" id="WaterwayChannelDepth" placeHolder="Enter Depth"><br>		
+              <input class="inputInfo" type="number" min="0" id="WaterwayChannelDepth" placeHolder="Enter Depth"><br>		
 
               <label for="NatureOfContamination">Known Contaminants on Property</label>	<button class="clearButton" onclick="document.getElementById('NatureOfContamination').value = ''">clear</button>
               <select class="dropDown" id="NatureOfContamination" required="" aria-required="true" autocomplete="off">	
@@ -334,14 +334,14 @@
               <label for="VAEnterpriseZone" id = "incLabel">In an Enterprise Zone </label>	
                 <button class="clearButton" onclick="document.getElementById('VAEnterpriseZone').value = ''">clear</button>
                 <select class="dropDown" id="VAEnterpriseZone" required="" aria-required="true" autocomplete="off">	
-                    <option value="" disabled selected>Select In an Enterprise Zone</option>	
+                    <option value="" disabled selected>Select in Ent. Zone</option>	
                 </select>
                 <button id= "ezCheck" class="zoneCheck">  <h6 id="ezClickText">Click to see layer</h6></button>
  
               <label for="ForeignTradeZone" id = "incLabel">In a Technology Zone </label>	
                 <button class="clearButton" onclick="document.getElementById('ForeignTradeZone').value = ''">clear</button>
                 <select class="dropDown" id="ForeignTradeZone" required="" aria-required="true" autocomplete="off">	
-                  <option value="" disabled selected>Select In a Technology Zone</option>	
+                  <option value="" disabled selected>Select in Tech. Zone</option>	
                 </select>
                 <button id= "tzCheck" class="zoneCheck"> <h6 id="tzClickText">Click to see layer</h6></button>
             </p>
@@ -360,9 +360,7 @@
     
     
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src="https://js.arcgis.com/4.7/"></script>
     <script src="js/main.js"></script>
     

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
-    
-    
+    // ***************************************************** 
+    // ACCORDIAN ACTIONS
     // add accordian expand on click action
     var acc = document.getElementsByClassName("accordion");
     var i;
@@ -24,8 +24,10 @@ $(document).ready(function(){
         $(this).css('color','black');
     });
    
+    // ***************************************************** 
+    // INPUT ERROR MISTAKE LOG
     var mistakes = [];
-   
+    // when an input it changed - the field is logged if its invalid
     $("input").change(function(){
         if(!this.checkValidity()){
             if (mistakes.includes(this.id)){
@@ -38,8 +40,8 @@ $(document).ready(function(){
             if (index !== -1){mistakes.splice(index,1);}
         }
         mistakeCheck(mistakes)
-    });
-    
+    }); 
+    // checks to see if there are any invalid field - if there are the user can't submit 
     function mistakeCheck(mistakes){
         console.log(mistakes);
         if(mistakes.length > 0){
@@ -51,20 +53,9 @@ $(document).ready(function(){
         }
     };
     
-    /*
-    for (item in fieldList){
-            var name = fieldList[item];
-            var element = dom.byId(name);
-            $(element).change(function(){
-                if(!element.checkValidity()){
-                    console.log(element.validationMessage);
-                } else {
-                    console.log("im ok!")
-                }
-            });
-        };
-    */
     
+    // ***************************************************** 
+    // ESRI REQUIRE
     require([
         "esri/Map",
         "esri/views/MapView",
@@ -76,6 +67,7 @@ $(document).ready(function(){
         "esri/widgets/Expand",
         "esri/widgets/BasemapToggle",
         "esri/widgets/Home",
+        "esri/widgets/Search",
         "esri/geometry/Extent",
         "esri/Viewpoint",
         "esri/core/watchUtils",
@@ -84,21 +76,22 @@ $(document).ready(function(){
         "dojo/domReady!"
       ],
       function(
-        Map, MapView, MapImageLayer, Layer, Field, LayerList, Graphic, Expand, BasemapToggle,
-        Home, Extent, Viewpoint, watchUtils,
-        on, dom
+        Map, MapView, MapImageLayer, Layer, Field, LayerList, Graphic, Expand, BasemapToggle, Home, Search, Extent, Viewpoint, watchUtils, on, dom
       ) {
-
-        var featureLayer, layerExpand, editExpand;
+        
+        // global variables for use later
+        var featureLayer, layerExpand, editExpand, searchExpand, queryExpand;
 
         // feature edit area domNodes
         var editArea, attributeEditing, updateInstructionDiv;
         
-                              
+        
+        // ***************************************************** 
+        // FILL IN DROPDOWNS AND COLLECT FIELD INFO
+        // empty list of fields
         var fieldList = [];
         var intFields = [];
         var floatFields = [];
-        
         
         // parse through data to fill in drop downs and collect field names for comparison
         $.ajax({
@@ -123,8 +116,6 @@ $(document).ready(function(){
                 } 
             });
         });
-
-        
         // create option function
         function createOption(domain, element) {
             $.each(domain.codedValues, function(domainIndex, domainValue) {
@@ -133,7 +124,8 @@ $(document).ready(function(){
             });
         }
         
-        
+        // *****************************************************        
+        // CREATE MAP AND ADD STYLED LAYERS
         var map = new Map({
           basemap: "streets"
         });
@@ -182,12 +174,11 @@ $(document).ready(function(){
                 outline: {
                     color: [168, 0, 0, 1]
                 },
-                size: 8,
+                size: 15,
                 color: [168, 0, 0, 0.52]
             }
         };
-        
-        
+               
         // map instance
         var view = new MapView({
           container: "viewDiv",
@@ -232,8 +223,7 @@ $(document).ready(function(){
             }
           }).then(addLayer)
           .catch(handleLayerLoadError);
-        
-        
+            
         setupEditing(fieldList, intFields, floatFields);
         setupView();
 
@@ -243,21 +233,19 @@ $(document).ready(function(){
         }  
          
         
-
+        // *****************************************************     
+        // APPLY EDITS FUNCTION TO SUBMIT NEW DATA TO DB
         function applyEdits(params) {
           unselectFeature();
           var promise = featureLayer.applyEdits(params);
           editResultsHandler(promise);
-        }
+        } 
 
-        
-
-        // *****************************************************
         // applyEdits promise resolved successfully
         // query the newly created feature from the featurelayer
         // set the editFeature object so that it can be used
         // to update its features.
-        // *****************************************************
+ 
         function editResultsHandler(promise) {
           promise
             .then(function(editsResult) {
@@ -282,24 +270,19 @@ $(document).ready(function(){
             });
         }
 
+        
         // *****************************************************
-        // listen to click event on the view
-        // 1. select if there is an intersecting feature
-        // 2. set the instance of editFeature
-        // 3. editFeature is the feature to update or delete
-        // *****************************************************
+        // LISTEN TO CLICK EVENT ON THE VIEW
+        // select if there is an intersecting feature on view click
         view.on("click", function(evt) {
           unselectFeature();
           view.hitTest(evt).then(function(response) {
             if (response.results.length > 0 && response.results[0].graphic) {
-
+                //grab the feature/attributes that was clicked on
                 var feature = response.results[0].graphic;
-                selectFeature(feature.attributes[featureLayer.objectIdField]);
-
-                //Name.value = feature.attributes["Name"];
-                //Address.value = feature.attributes["Address"];
-            
+                selectFeature(feature.attributes[featureLayer.objectIdField]);         
                 
+                // loop through fields and fill in editArea items with data
                 for (item in fieldList){
                     var name = fieldList[item];
                     var value = feature.attributes[name];
@@ -315,9 +298,7 @@ $(document).ready(function(){
                         element.value = value;
                     }
                 }
-                
-                
-                
+                          
                 attributeEditing.style.display = "block";
                 updateInstructionDiv.style.display = "none";
             }
@@ -326,17 +307,13 @@ $(document).ready(function(){
 
 
         // *****************************************************
-        // select Feature function
-        // 1. Select the newly created feature on the view
-        // 2. or select an existing feature when user click on it
-        // 3. Symbolize the feature with cyan rectangle
-        // *****************************************************
+        // SELECT NEWLY CREATED FEATURE // SELECT EXISTING FEATURE
         function selectFeature(objectId) {
           // symbol for the selected feature on the view
           var selectionSymbol = {
             type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
             color: [0, 0, 0, 0],
-            size: 10,
+            size: 17,
             outline: {
               color: [0, 255, 255, 1],
               width: "3px"
@@ -344,7 +321,8 @@ $(document).ready(function(){
           };
           var query = featureLayer.createQuery();
           query.where = featureLayer.objectIdField + " = " + objectId;
-
+          
+          // symbolize feature  with the selection symbol renderer
           featureLayer.queryFeatures(query).then(function(results) {
             if (results.features.length > 0) {
               editFeature = results.features[0];
@@ -364,22 +342,18 @@ $(document).ready(function(){
             
           for (item in fieldList){
               var name = fieldList[item];
-              var element  = document.getElementById(name);
-              
+              var element  = document.getElementById(name);             
               if (name =="OBJECTID"){
                     // do nothing;
                 } else {
                     element.value = null;
                 }
             }
-          //Name.value = null;
-          //Address.value = null;
           view.graphics.removeAll();
         }
 
         // *****************************************************
-        // add homeButton and expand widgets to UI
-        // *****************************************************
+        // SET UP VIEW AND ADD BUTTONS AND WIDGETS
         function setupView() {
           // set home button view point to initial extent
             var homeButton = new Home({
@@ -388,10 +362,10 @@ $(document).ready(function(){
                     targetGeometry: initialExtent
                 })
             });
-            view.ui.add(homeButton, "top-left");
 
+            // layer list
             var layerList = new LayerList({
-                view: view,
+                view: view,  
                 listItemCreatedFunction: function(event){
                     var item = event.item;
                     
@@ -409,52 +383,96 @@ $(document).ready(function(){
                 }
             });
             
-            var query = document.getElementById("info-div");
-            
-            // 1 - Create the widget
-            var toggle = new BasemapToggle({
-                // 2 - Set properties
-                view: view, // view that provides access to the map's 'topo' basemap
-                nextBasemap: "hybrid" // allows for toggling to the 'hybrid' basemap
-            });
-
-            // Add widget to the top right corner of the view
-            view.ui.add(toggle, "bottom-left");
-            //view.ui.add("info-div", "bottom-left")
-            
             // expand layer list
             layerExpand = new Expand({
                 expandIconClass: "esri-icon-layers",
                 expandTooltip: "Open Layer List",
                 expanded: false,
                 view: view,
-                content: layerList
+                content: layerList,
+                mode: "floating"
                 });
+            
+            
+            // basemap toggle
+            var toggle = new BasemapToggle({
+                // 2 - Set properties
+                view: view, // view that provides access to the map's 'topo' basemap
+                nextBasemap: "hybrid" // allows for toggling to the 'hybrid' basemap
+            }); 
 
-            // expand widget
+            // expand widget for edit area
             editExpand = new Expand({
                 expandIconClass: "esri-icon-edit",
                 expandTooltip: "Expand Edit",
-                expanded: true,
                 view: view,
                 content: editArea
             });
+            // test if on mobile device - close on moble open on other
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                editExpand.expanded = false;
+            } else {
+                editExpand.expanded = true;              
+            };
             
+            // expand widget for query
+            var query = document.getElementById("info-div");
             queryExpand = new Expand ({
                 expandIconClass: "esri-icon-filter",
                 expandTooltip: "Expand Property Filter",
                 expanded: false,
                 view: view,
-                content: query
+                content: query,
+                mode: "floating"
             });
-
-            // add edit and layer list   
+            
+            // search widget
+            var searchWidget = new Search({
+                view:view
+            });
+            // search expand
+            searchExpand = new Expand({
+                expandIconClass: "esri-icon-search",
+                view: view,
+                content: searchWidget,
+                mode: "floating"
+            });
+            
+            // add all widgets to view 
             view.ui.add( editExpand, "top-right");
-            view.ui.add([layerExpand, queryExpand],"top-left");
+            view.ui.add([homeButton, searchExpand, queryExpand, layerExpand],"top-left");
+            view.ui.add(toggle, "bottom-left");
         }
         
-        // on filter change action
+        
+        // *****************************************************
+        // WATCH SEARCH LAYER AND QUERY AND HIDE WHEN OTHER IS OPEN
+        var searchWatch = watchUtils.pausable(searchExpand, 'expanded', function(newVal){
+            if (newVal = true){
+                layerExpand.collapse();
+                queryExpand.collapse();
+            }
+        });
+        
+        var layerWatch = watchUtils.pausable(layerExpand, 'expanded', function(newVal){
+            if (newVal = true){
+                searchExpand.collapse();
+                queryExpand.collapse();
+            }
+        });
+        
+        var queryWatch = watchUtils.pausable(queryExpand, 'expanded', function(newVal){
+            if (newVal = true){
+                searchExpand.collapse();
+                layerExpand.collapse();
+            }
+        });
+        
+        
+        // *****************************************************
+        // ON FILTER CHANGE ACTION
          $('#filter').change(function(){
+            unselectFeature();
             var selected = this.value;
             if (selected == ''){
                 featureLayer.definitionExpression = "";
@@ -463,8 +481,9 @@ $(document).ready(function(){
             }
 
         });
-        
-        // ez tz click from edit panel
+ 
+        // *****************************************************
+        // FUNCTIONALITY FOR EZ/TZ BUTTONS IN EDITAREA
         $('#ezCheck').click(function(){
             var visibility = incentives.sublayers.items["0"].visible
             if (visibility == true){
@@ -483,46 +502,25 @@ $(document).ready(function(){
         });
         
         
-        $('#attributeArea input', '#attributeArea select').each(function(){
-            $(this).change(function(){
-                console.log("i changed")
-            })
-        })
-        
-        
         
 
         // *****************************************************
-        // set up for editing
-        // *****************************************************
+        // SET UP FOR EDITING
         function setupEditing(fieldList, intFields, floatFields) {
           // input boxes for the attribute editing
           editArea = dom.byId("editArea");
           updateInstructionDiv = dom.byId("updateInstructionDiv");
           attributeEditing = dom.byId("featureUpdateDiv");        
-           /*
-          for (item in fieldList){
-            var name = fieldList[item];
-            var element  = dom.byId(name);
-            if (name =="OBJECTID"){
-                // do nothing
-            } else {
-                name = element;
-                console.log("done56");
-                }
-            }  
-            */    
-          //Name = dom.byId("Name");
-          //Address = dom.byId("Address");
+
 
           // *****************************************************
-          // btnUpdate click event
+          // BTN UPDATE CLICK EVENT
           // update attributes of selected feature
-          // *****************************************************
           on(dom.byId("btnUpdate"), "click", function(evt) {
               featureLayer.definitionExpression = ""
               if (editFeature) {
-              
+                
+                // loop through fields and collect data entries
                 for (item in fieldList){
                     var name = fieldList[item];
                     var value = editFeature.attributes[name];
@@ -540,10 +538,8 @@ $(document).ready(function(){
                         editFeature.attributes[name]= element.value;
                     }
                 }
-                
-                
-              //editFeature.attributes["Name"] = Name.value;
-              //editFeature.attributes["Address"] = Address.value;
+              
+              // submit data entries to the database
               var edits = {
                   updateFeatures: [editFeature]
               };
@@ -552,9 +548,8 @@ $(document).ready(function(){
           });
 
           // *****************************************************
-          // btnAddFeature click event
+          // BTNADDFEATURE CLICK EVENT
           // create a new feature at the click location
-          // *****************************************************
           on(dom.byId("btnAddFeature"), "click", function() {
             featureLayer.definitionExpression = ""
             unselectFeature();
@@ -595,9 +590,8 @@ $(document).ready(function(){
           });
 
           // *****************************************************
-          // delete button click event. ApplyEdits is called
-          // with the selected feature to be deleted
-          // *****************************************************
+          // DELETE BUTTON CLICK EVENT 
+          // ApplyEdits is called with the selected feature to be deleted
           on(dom.byId("btnDelete"), "click", function() {
             var edits = {
               deleteFeatures: [editFeature]
@@ -605,11 +599,12 @@ $(document).ready(function(){
             applyEdits(edits);
           });
 
-          // *****************************************************
+          /* *****************************************************
+          // RETIRED FOR NOW 
           // watch for view LOD change. Display Feature editing
           // area when view.zoom level is 14 or higher
           //.catch hide the feature editing area
-          // *****************************************************
+
           view.when(function() {
             watchUtils.whenTrue(view, "stationary", function() {
               if (editExpand) {
@@ -621,14 +616,14 @@ $(document).ready(function(){
                 }
               }
             });
-          });
+          });*/
+            
+            
+            
         }
-
+        // report if the layer failed to load
         function handleLayerLoadError(err) {
           console.log("Layer failed to load: ", err);
-        }
-        
-        
-        
+        }        
     });
 });

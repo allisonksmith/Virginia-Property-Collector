@@ -18,6 +18,8 @@ h6{
   text-decoration: underline;
 }
 
+
+
 .editArea-container {
   background: #fff;
   font-family: 'Roboto', sans-serif;
@@ -25,10 +27,12 @@ h6{
   overflow: auto;
   max-height: 90vh;
   padding: 12px 15px;
-  width: 300px;
+  width: 280px;
 }
 
-
+#viewDiv > div.esri-view-root > div.esri-ui > div.esri-ui-inner-container.esri-ui-corner-container > div.esri-ui-top-right.esri-ui-corner > div > div.esri-expand__container > div.esri-expand__panel > div{
+    padding: 20px;
+}
 
 .edit-button:hover,
 .edit-button:focus{
