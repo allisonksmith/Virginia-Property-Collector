@@ -259,6 +259,10 @@ $(document).ready(function(){
 
                 selectFeature(newIncidentId);
               }
+              // reinitalizes the filter if engaged
+              if (document.getElementById("filter").value != ''){
+                featureLayer.definitionExpression = "PropertyType = '" + document.getElementById("filter").value + "'";
+                }
             })
             .catch(function(error) {
               console.log("===============================================");
@@ -474,10 +478,12 @@ $(document).ready(function(){
             var selected = this.value;
             if (selected == ''){
                 featureLayer.definitionExpression = "";
+                queryExpand.iconNumber = 0;
             } else{
              featureLayer.definitionExpression = "PropertyType = '" + selected + "'";
+             queryExpand.iconNumber = 1;
             }
-
+            queryExpand.collapse();
         });
  
         // *****************************************************
@@ -545,7 +551,7 @@ $(document).ready(function(){
               //close panel on mobile  
               if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 editExpand.collapse();
-              };  
+              };
             }
           });
 
