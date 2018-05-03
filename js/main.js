@@ -20,7 +20,6 @@ $(document).ready(function(){
     
     $('.dropDown').change(function() {
         var change = this.value;
-        console.log(change);
         $(this).css('color','black');
     });
    
@@ -43,7 +42,6 @@ $(document).ready(function(){
     }); 
     // checks to see if there are any invalid field - if there are the user can't submit 
     function mistakeCheck(mistakes){
-        console.log(mistakes);
         if(mistakes.length > 0){
             document.getElementById("btnUpdate").disabled = true;
             document.getElementById("btnUpdate").value = "Correct entry mistakes to submit";
@@ -287,7 +285,7 @@ $(document).ready(function(){
                     var name = fieldList[item];
                     var value = feature.attributes[name];
                     var element  = document.getElementById(name);
-                    if (name =="OBJECTID"){
+                    if (name =="OBJECTID"||name ==="AddressState"){
                         // do nothing
                     } else if (name== "AvailableDate" && value != null){                    
                         var d = new Date(value).toISOString().split('T')[0]; // format date for appropriate entry
@@ -343,7 +341,7 @@ $(document).ready(function(){
           for (item in fieldList){
               var name = fieldList[item];
               var element  = document.getElementById(name);             
-              if (name =="OBJECTID"){
+              if (name =="OBJECTID"||name ==="AddressState"){
                     // do nothing;
                 } else {
                     element.value = null;
@@ -526,7 +524,7 @@ $(document).ready(function(){
                     var value = editFeature.attributes[name];
                     var element  = document.getElementById(name);
                    // var elementVal = element.value;
-                    if (name =="OBJECTID"){
+                    if (name =="OBJECTID"||name ==="AddressState"){
                         // do nothing
                     } else if (element.value == ""){
                         editFeature.attributes[name]= null;
